@@ -4461,7 +4461,10 @@
          * @returns the displayed value of the field's record associated with the cell
          */
         getCellCopy: function(ind, col_ind) {
-            return w2utils.stripTags(this.getCellHTML(ind, col_ind));
+
+            var col = this.columns[ col_ind ];
+            var val = this.getCellHTML( ind, col_ind ).replace( />(.*)</g, ( result, innerText ) => '>' + innerText.replace( /(\d),(?=\d)/g, '$1' ) + '<' );
+            return w2utils.stripTags( val );
         },
 
         paste: function (text) {
