@@ -7853,7 +7853,10 @@ if (typeof module!='undefined' && module.exports) {
          * @returns the displayed value of the field's record associated with the cell
          */
         getCellCopy: function(ind, col_ind) {
-            return w2utils.stripTags(this.getCellHTML(ind, col_ind));
+
+            var col = this.columns[ col_ind ];
+            var val = this.getCellHTML( ind, col_ind ).replace( />(.*)</g, ( result, innerText ) => '>' + innerText.replace( /(\d),(?=\d)/g, '$1' ) + '<' );
+            return w2utils.stripTags( val );
         },
 
         paste: function (text) {
@@ -11162,7 +11165,7 @@ if (typeof module!='undefined' && module.exports) {
                 data = record.w2ui.changes[col.field];
             }
             if ($.isPlainObject(data) /*&& col.editable*/) {    //It can be an object btw
-                if (col.options && col.options.items) {
+                if ( col.options && Array.isArray( col.options.items ) ) {
                         val=col.options.items.find(function(item){ return item.id==data.id});
                         if (val) data=val.text;
                         else data=data.id;
