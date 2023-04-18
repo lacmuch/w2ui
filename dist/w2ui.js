@@ -13367,7 +13367,7 @@ var w2popup = {};
             var msgCount = $('#w2ui-popup .w2ui-message').length;
             // remove message
             if ($.trim(options.html) === '' && $.trim(options.body) === '' && $.trim(options.buttons) === '') {
-                var $msg = $('#w2ui-popup #w2ui-message'+ (msgCount-1));
+                var $msg = $('#w2ui-popup .w2ui-message').last();
                 var eloptions = $msg.data('options') || {};
                 $msg.css(w2utils.cssPrefix({
                     'transition': '0.15s',
